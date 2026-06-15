@@ -10,6 +10,11 @@ spring:
             predicates:
               - Path=/api/auth/**
 
+          - id: auth-service-admin
+            uri: lb://auth-service
+            predicates:
+              - Path=/api/admin/**
+
           - id: user-service
             uri: lb://user-service
             predicates:
@@ -59,6 +64,9 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+
+jwt:
+  secret: TXlTdXBlclNlY3JldEtleUZvckp3dEF1dGhlbnRpY2F0aW9uUHJvamVjdDEyMzQ1Njc4OQ==
 
 management:
   endpoints:

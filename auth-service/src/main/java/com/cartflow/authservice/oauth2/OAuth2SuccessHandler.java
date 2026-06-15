@@ -43,7 +43,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found after OAuth2 login"));
 
-        String accessToken = jwtUtil.generateToken(email);
+        String accessToken = jwtUtil.generateToken(email, user.getId(), user.getRole().name());
 
         refreshTokenRepository.findByUser(user).ifPresent(refreshTokenRepository::delete);
         RefreshToken refreshToken = RefreshToken.builder()

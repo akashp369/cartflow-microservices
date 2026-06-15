@@ -47,7 +47,7 @@ public class AuthService {
 
         userRepository.save(user);
 
-        String accessToken = jwtUtil.generateToken(user.getEmail());
+        String accessToken = jwtUtil.generateToken(user.getEmail(), user.getId(), user.getRole().name());
         String refreshToken = createRefreshToken(user);
 
         return AuthResponse.builder()
@@ -65,7 +65,7 @@ public class AuthService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        String accessToken = jwtUtil.generateToken(user.getEmail());
+        String accessToken = jwtUtil.generateToken(user.getEmail(), user.getId(), user.getRole().name());
         String refreshToken = createRefreshToken(user);
 
         return AuthResponse.builder()
@@ -84,7 +84,8 @@ public class AuthService {
             throw new RuntimeException("Refresh token expired. Please login again.");
         }
 
-        String newAccessToken = jwtUtil.generateToken(refreshToken.getUser().getEmail());
+        User user = refreshToken.getUser();
+        String newAccessToken = jwtUtil.generateToken(user.getEmail(), user.getId(), user.getRole().name());
 
         return AuthResponse.builder()
                 .accessToken(newAccessToken)
