@@ -18,14 +18,20 @@ public class ProfileController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<ProfileResponse>> getProfile(
-            @RequestHeader("X-User-Id") Long userId) {
-        return ResponseEntity.ok(ApiResponse.ok("Profile fetched", profileService.getProfile(userId)));
+            @RequestHeader("X-User-Id") Long userId,
+            @RequestHeader("X-User-Name") String name,
+            @RequestHeader("X-User-Email") String email) {
+        return ResponseEntity.ok(ApiResponse.ok("Profile fetched",
+                profileService.getProfile(userId, name, email)));
     }
 
     @PutMapping
     public ResponseEntity<ApiResponse<ProfileResponse>> updateProfile(
             @RequestHeader("X-User-Id") Long userId,
+            @RequestHeader("X-User-Name") String name,
+            @RequestHeader("X-User-Email") String email,
             @Valid @RequestBody UpdateProfileRequest request) {
-        return ResponseEntity.ok(ApiResponse.ok("Profile updated", profileService.updateProfile(userId, request)));
+        return ResponseEntity.ok(ApiResponse.ok("Profile updated",
+                profileService.updateProfile(userId, name, email, request)));
     }
 }

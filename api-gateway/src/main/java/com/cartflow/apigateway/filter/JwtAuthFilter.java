@@ -57,11 +57,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
 
-        // Extract user info and inject as trusted headers
         MutableHttpServletRequest mutableRequest = new MutableHttpServletRequest(request);
         mutableRequest.putHeader("X-User-Id",    String.valueOf(jwtUtil.extractUserId(token)));
         mutableRequest.putHeader("X-User-Email", jwtUtil.extractEmail(token));
         mutableRequest.putHeader("X-User-Role",  jwtUtil.extractRole(token));
+        mutableRequest.putHeader("X-User-Name",  jwtUtil.extractName(token));
 
         log.debug("JWT verified → userId={}, role={}, path={}",
                 jwtUtil.extractUserId(token), jwtUtil.extractRole(token), uri);

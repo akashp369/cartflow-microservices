@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/auth/account")
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 public class UserController {

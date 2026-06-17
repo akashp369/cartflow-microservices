@@ -10,15 +10,17 @@ import java.time.LocalDateTime;
 @Builder
 public class ProfileResponse {
 
-    private Long id;
     private Long userId;
+    private String name;
+    private String email;
     private String phone;
     private LocalDateTime createdAt;
 
-    public static ProfileResponse from(Profile profile) {
+    public static ProfileResponse from(Profile profile, String name, String email) {
         return ProfileResponse.builder()
-                .id(profile.getId())
                 .userId(profile.getUserId())
+                .name(name)
+                .email(email)
                 .phone(profile.getPhone())
                 .createdAt(profile.getCreatedAt())
                 .build();

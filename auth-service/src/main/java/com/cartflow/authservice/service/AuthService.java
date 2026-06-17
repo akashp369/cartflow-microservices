@@ -47,7 +47,7 @@ public class AuthService {
 
         userRepository.save(user);
 
-        String accessToken = jwtUtil.generateToken(user.getEmail(), user.getId(), user.getRole().name());
+        String accessToken = jwtUtil.generateToken(user.getEmail(), user.getId(), user.getRole().name(), user.getName());
         String refreshToken = createRefreshToken(user);
 
         return AuthResponse.builder()
@@ -65,7 +65,7 @@ public class AuthService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        String accessToken = jwtUtil.generateToken(user.getEmail(), user.getId(), user.getRole().name());
+        String accessToken = jwtUtil.generateToken(user.getEmail(), user.getId(), user.getRole().name(), user.getName());
         String refreshToken = createRefreshToken(user);
 
         return AuthResponse.builder()
@@ -85,7 +85,7 @@ public class AuthService {
         }
 
         User user = refreshToken.getUser();
-        String newAccessToken = jwtUtil.generateToken(user.getEmail(), user.getId(), user.getRole().name());
+        String newAccessToken = jwtUtil.generateToken(user.getEmail(), user.getId(), user.getRole().name(), user.getName());
 
         return AuthResponse.builder()
                 .accessToken(newAccessToken)

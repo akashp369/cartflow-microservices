@@ -14,20 +14,20 @@ public class ProfileService {
 
     private final ProfileRepository profileRepository;
 
-    public ProfileResponse getProfile(Long userId) {
+    public ProfileResponse getProfile(Long userId, String name, String email) {
         Profile profile = getOrCreate(userId);
-        return ProfileResponse.from(profile);
+        return ProfileResponse.from(profile, name, email);
     }
 
     @Transactional
-    public ProfileResponse updateProfile(Long userId, UpdateProfileRequest request) {
+    public ProfileResponse updateProfile(Long userId, String name, String email, UpdateProfileRequest request) {
         Profile profile = getOrCreate(userId);
 
         if (request.getPhone() != null && !request.getPhone().isBlank()) {
             profile.setPhone(request.getPhone());
         }
 
-        return ProfileResponse.from(profileRepository.save(profile));
+        return ProfileResponse.from(profileRepository.save(profile), name, email);
     }
 
     private Profile getOrCreate(Long userId) {
